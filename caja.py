@@ -1,6 +1,5 @@
 # Importamos funciones de los módulos de muestra e inventario
 from muestra import descontar_muestra, consultar_muestra
-from inventario import consultar_inventario
 
 def vender_producto():
     # Pedimos al usuario el nombre del producto y la cantidad que desea comprar
