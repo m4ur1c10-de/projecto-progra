@@ -1,0 +1,15 @@
+inventario = {}
+
+def agregar_producto(nombre, cantidad):
+    inventario[nombre] = inventario.get(nombre, 0) + cantidad
+
+def consultar_inventario():
+    return inventario
+
+def descontar_inventario(nombre, cantidad):
+    if inventario.get(nombre, 0) >= cantidad:
+        inventario[nombre] -= cantidad
+        return True
+    return False
+
+muestra.py
