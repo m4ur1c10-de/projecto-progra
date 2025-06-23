@@ -1,7 +1,8 @@
 inventario = {}
 
-def agregar_producto(nombre, cantidad):
-    inventario[nombre] = inventario.get(nombre, 0) + cantidad
+def agregar_producto(nombre, cantidad):azucar 3
+
+    inventario azucar = inventario.get(nombre, 0) + cantidad
 
 def consultar_inventario():
     return inventario
