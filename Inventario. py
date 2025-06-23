@@ -13,3 +13,19 @@ def descontar_inventario(nombre, cantidad):
     return False
 
 muestra.py
+muestra = {}
+
+def mover_a_muestra(nombre, cantidad, inventario_func):
+    if inventario_func(nombre, cantidad):
+        muestra[nombre] = muestra.get(nombre, 0) + cantidad
+        return True
+    return False
+
+def consultar_muestra():
+    return muestra
+
+def descontar_muestra(nombre, cantidad):
+    if muestra.get(nombre, 0) >= cantidad:
+        muestra[nombre] -= cantidad
+        return True
+    return False
