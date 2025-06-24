@@ -1,0 +1,69 @@
+# Definimos las góndolas por categoría
+gondolas = {
+    1: {},  # Góndola 1: abarrotes seleccionados
+    2: {},  # Góndola 2: lácteos
+    3: {},  # Góndola 3: bebidas
+    4: {},  # Góndola 4: snacks
+    5: {}   # Góndola 5: limpieza
+}
+
+# Mapa de categorías a góndola
+categoria_a_gondola = {
+    "abarrotes": 1,
+    "lácteos": 2,
+    "bebidas": 3,
+    "snacks": 4,
+    "limpieza": 5
+}
+
+# Reponer un producto desde bodega (inventario) a la góndola
+def reponer_a_gondola(producto, cantidad):
+    if producto in inventario:
+        categoria = inventario[producto]["categoria"]
+        gondola_num = categoria_a_gondola.get(categoria)
+
+        if not gondola_num:
+            print("Categoría no válida para góndolas.")
+            return
+
+        gondola = gondolas[gondola_num]
+
+        # Obtener stock actual en inventario
+        disponible = inventario[producto]["cantidad"]
+        if disponible < cantidad:
+            print("No hay suficiente stock en inventario.")
+            return
+
+        # Limitar a 30 unidades máximas por producto
+        actual_en_gondola = gondola.get(producto, {}).get("cantidad", 0)
+        espacio_disponible = 30 - actual_en_gondola
+        if espacio_disponible <= 0:
+            print(f"{producto} ya está completo en góndola (30 unidades).")
+            return
+
+        cantidad_a_reponer = min(cantidad, espacio_disponible)
+
+        # Actualizar bodega
+        inventario[producto]["cantidad"] -= cantidad_a_reponer
+
+        # Actualizar góndola
+        if producto in gondola:
+            gondola[producto]["cantidad"] += cantidad_a_reponer
+        else:
+            gondola[producto] = {
+                "cantidad": cantidad_a_reponer,
+                "precio": inventario[producto]["precio"]
+            }
+
+        print(f"Se repusieron {cantidad_a_reponer} unidades de '{producto}' en Góndola {gondola_num}.")
+    else:
+        print("Producto no existe en el inventario.")
+
+# Mostrar productos en todas las góndolas
+def mostrar_gondolas():
+    for num, productos in gondolas.items():
+        print(f"\n--- Góndola {num} ---")
+        if not productos:
+            print("Vacía.")
+        for nombre, datos in productos.items():
+            print(f"{nombre}: {datos['cantidad']} unidades - ${datos['precio']}
