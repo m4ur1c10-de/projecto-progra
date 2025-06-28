@@ -81,6 +81,3 @@ def obtener_precio_producto(nombre):
     # Obtenemos el precio desde el inventario
     inventario = consultar_inventario()
     producto = inventario.get(nombre)
-    if isinstance(producto, dict):
-        return producto.get("precio", 1000)  # Precio por defecto si no existe
-    return 1000
